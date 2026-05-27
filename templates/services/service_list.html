@@ -1,0 +1,206 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}Our Printing Services — {{ company_name }}{% endblock %}
+{% block meta_description %}Explore our comprehensive range of professional screen printing services. From fabric to plastics, we deliver precision printing at up to 1200 DPI.{% endblock %}
+
+{% block content %}
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PAGE HEADER                                                -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="relative pt-32 pb-20 bg-gs-cloud overflow-hidden border-b border-gs-accent-soft/20">
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Breadcrumb -->
+        <nav class="flex items-center space-x-2 text-sm mb-8 reveal">
+            <a href="{% url 'home' %}" class="text-gs-charcoal/60 hover:text-gs-accent transition-colors">Home</a>
+            <svg class="w-4 h-4 text-gs-charcoal/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <span class="text-gs-accent font-medium">Services</span>
+        </nav>
+
+        <!-- Title -->
+        <div class="reveal delay-100">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-outfit font-black text-gs-charcoal mb-4">
+                Our <span class="text-gs-accent italic font-medium">Services</span>
+            </h1>
+            <p class="text-gs-charcoal/70 text-lg max-w-2xl">
+                Comprehensive screen printing solutions for every industry. Precision, quality, and reliability — that's the Grow Sale promise.
+            </p>
+            <div class="w-24 h-1 bg-gs-accent-soft rounded-full mt-6"></div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="flex flex-wrap gap-6 mt-10 reveal delay-200">
+            <div class="flex items-center space-x-2 bg-white border border-gs-accent-soft/20 rounded-full px-4 py-2 shadow-sm">
+                <svg class="w-4 h-4 text-gs-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                <span class="text-gs-charcoal text-sm font-medium">Up to 1200 DPI</span>
+            </div>
+            <div class="flex items-center space-x-2 bg-white border border-gs-accent-soft/20 rounded-full px-4 py-2 shadow-sm">
+                <svg class="w-4 h-4 text-gs-accent-soft" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-gs-charcoal text-sm font-medium">{{ company_years }}+ Years Experience</span>
+            </div>
+            <div class="flex items-center space-x-2 bg-white border border-gs-accent-soft/20 rounded-full px-4 py-2 shadow-sm">
+                <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-gs-charcoal text-sm font-medium">Quality Guaranteed</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SERVICES GRID                                              -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="relative py-16 lg:py-24 bg-gs-snow overflow-hidden">
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Services -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {% for service in services %}
+            <div class="group reveal" id="{{ service.slug }}">
+                <a href="{% url 'quote_form' %}?material={% if service.slug == 'garment-apparel-printing' %}fabric{% elif service.slug == 'fabric-textile-printing' %}silk{% elif service.slug == 'packaging-label-printing' %}cardboard{% else %}plastics{% endif %}" class="block cursor-pointer h-full">
+                <div class="relative bg-white rounded-2xl p-8 lg:p-10 shadow-sm hover:shadow-lg transition-all duration-500 border border-gs-cloud hover:border-gs-accent-soft/40 overflow-hidden group-hover:-translate-y-1 h-full">
+                    
+                    <!-- Number badge -->
+                    <div class="absolute top-6 right-6 w-12 h-12 bg-gs-snow border border-gs-cloud rounded-full flex items-center justify-center">
+                        <span class="text-gs-charcoal/40 text-xl font-outfit font-black">{{ forloop.counter|stringformat:"02d" }}</span>
+                    </div>
+
+                    <!-- Icon -->
+                    <div class="w-16 h-16 bg-white border border-gs-accent-soft/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-sm">
+                        <svg class="w-8 h-8 text-gs-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                        </svg>
+                    </div>
+
+                    <!-- Content -->
+                    <h3 class="text-2xl font-outfit font-bold text-gs-charcoal mb-4 group-hover:text-gs-accent transition-colors pr-12">
+                        {{ service.name }}
+                    </h3>
+                    <p class="text-gs-charcoal/70 leading-relaxed mb-6">
+                        {{ service.description }}
+                    </p>
+
+                    <!-- Specs -->
+                    <div class="flex flex-wrap gap-3 mb-6">
+                        {% if service.resolution_dpi %}
+                        <span class="inline-flex items-center px-3 py-1.5 bg-gs-snow border border-gs-cloud rounded-lg text-xs font-semibold text-gs-charcoal">
+                            <svg class="w-3.5 h-3.5 mr-1.5 text-gs-accent-soft" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            {{ service.resolution_dpi }}
+                        </span>
+                        {% endif %}
+                        <span class="inline-flex items-center px-3 py-1.5 bg-gs-snow border border-gs-cloud rounded-lg text-xs font-semibold text-gs-charcoal">
+                            <svg class="w-3.5 h-3.5 mr-1.5 text-gs-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            Quality Assured
+                        </span>
+                        <span class="inline-flex items-center px-3 py-1.5 bg-gs-snow border border-gs-cloud rounded-lg text-xs font-semibold text-gs-charcoal">
+                            <svg class="w-3.5 h-3.5 mr-1.5 text-gs-accent-soft" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            Fast Delivery
+                        </span>
+                    </div>
+
+                    <!-- CTA -->
+                    <span class="inline-flex items-center text-gs-accent font-semibold text-sm group/link border-t border-gs-cloud pt-4 w-full mt-auto group-hover:text-gs-charcoal transition-colors">
+                        <span>Request Quote for This Service</span>
+                        <svg class="w-4 h-4 ml-1 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </span>
+                </div>
+                </a>
+            </div>
+            {% empty %}
+            <!-- Fallback service cards -->
+            {% with service_names="Screen Printing on Fabric,Screen Printing on Plastics,Industrial Label Printing,Custom Merchandise Printing,High-Resolution Photo Printing,Specialty & Custom Projects" %}
+            {% for name in service_names|split:"," %}
+            <div class="group reveal">
+                <div class="relative bg-white rounded-2xl p-8 lg:p-10 shadow-sm hover:shadow-lg transition-all duration-500 border border-gs-cloud hover:border-gs-accent-soft/40 overflow-hidden group-hover:-translate-y-1 h-full">
+                    <div class="absolute top-6 right-6 w-12 h-12 bg-gs-snow border border-gs-cloud rounded-full flex items-center justify-center">
+                        <span class="text-gs-charcoal/40 text-xl font-outfit font-black">{{ forloop.counter|stringformat:"02d" }}</span>
+                    </div>
+                    <div class="w-16 h-16 bg-white border border-gs-accent-soft/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-sm">
+                        <svg class="w-8 h-8 text-gs-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
+                    </div>
+                    <h3 class="text-2xl font-outfit font-bold text-gs-charcoal mb-4 group-hover:text-gs-accent transition-colors pr-12">{{ name }}</h3>
+                    <p class="text-gs-charcoal/70 leading-relaxed mb-6">Professional {{ name|lower }} services with industrial-grade precision and unmatched quality. Our experienced team ensures every project exceeds expectations.</p>
+                    <div class="flex flex-wrap gap-3 mb-6">
+                        <span class="inline-flex items-center px-3 py-1.5 bg-gs-snow border border-gs-cloud rounded-lg text-xs font-semibold text-gs-charcoal">
+                            <svg class="w-3.5 h-3.5 mr-1.5 text-gs-accent-soft" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            Up to 1200 DPI
+                        </span>
+                        <span class="inline-flex items-center px-3 py-1.5 bg-gs-snow border border-gs-cloud rounded-lg text-xs font-semibold text-gs-charcoal">
+                            <svg class="w-3.5 h-3.5 mr-1.5 text-gs-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            Quality Assured
+                        </span>
+                    </div>
+                    <a href="{% url 'quote_form' %}?material={% if forloop.counter == 1 %}fabric{% elif forloop.counter == 5 %}silk{% else %}plastics{% endif %}" class="inline-flex items-center text-gs-accent font-semibold text-sm group/link border-t border-gs-cloud pt-4 w-full mt-auto hover:text-gs-charcoal transition-colors">
+                        <span>Request Quote</span>
+                        <svg class="w-4 h-4 ml-1 group-hover/link:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+            {% endwith %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PROCESS SECTION                                            -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="relative py-20 lg:py-28 bg-gs-charcoal overflow-hidden border-t border-gs-charcoal">
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16 reveal">
+            <span class="inline-block text-gs-accent-soft text-sm font-semibold uppercase tracking-[0.2em] mb-4">Our Process</span>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-outfit font-black text-white mb-4">
+                How We <span class="text-gs-accent-soft italic font-medium">Work</span>
+            </h2>
+            <div class="w-24 h-1 bg-gs-accent mx-auto rounded-full"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {% with steps="Consultation:Discuss your project requirements and goals with our experts.,Design Review:We review your artwork and optimize it for the best print quality.,Production:Your project goes through our precision printing process with quality checks.,Delivery:Fast and secure delivery of your completed prints right to your doorstep." %}
+            {% for step in steps|split:"," %}
+            {% with parts=step|split:":" %}
+            <div class="text-center group reveal">
+                <div class="relative mx-auto w-20 h-20 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center mb-6 group-hover:border-gs-accent-soft/30 group-hover:bg-white/10 transition-all duration-500">
+                    <span class="text-3xl font-outfit font-black text-white/30 group-hover:text-gs-accent-soft transition-colors">{{ forloop.counter }}</span>
+                </div>
+                <h3 class="text-lg font-outfit font-bold text-white mb-2">{{ parts.0 }}</h3>
+                <p class="text-white/60 text-sm leading-relaxed">{{ parts.1 }}</p>
+            </div>
+            {% endwith %}
+            {% endfor %}
+            {% endwith %}
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- CTA SECTION                                                -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="relative py-20 bg-gs-cloud overflow-hidden">
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div class="bg-white rounded-3xl p-10 lg:p-16 shadow-lg border border-gs-snow reveal">
+            <div class="w-16 h-16 bg-gs-snow border border-gs-accent-soft/20 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-sm">
+                <svg class="w-8 h-8 text-gs-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+            </div>
+            <h2 class="text-3xl sm:text-4xl font-outfit font-black text-gs-charcoal mb-4">
+                Ready to Get Started?
+            </h2>
+            <p class="text-gs-charcoal/70 text-lg max-w-xl mx-auto mb-8">
+                Tell us about your project and get a free, no-obligation quote. We'll bring your vision to life with precision printing.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="{% url 'quote_form' %}" class="inline-flex items-center justify-center px-8 py-4 bg-gs-accent text-white font-bold rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                    <span>Get Your Free Quote</span>
+                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </a>
+                <a href="tel:{{ company_phone }}" class="inline-flex items-center justify-center px-8 py-4 border-2 border-gs-charcoal/20 text-gs-charcoal font-bold rounded-xl hover:border-gs-charcoal/40 hover:bg-gs-snow transition-all duration-300">
+                    <svg class="w-5 h-5 mr-2 text-gs-accent-soft" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                    <span>Call Us</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Blog & Insights — {{ company_name }}{% endblock %}
+{% block meta_description %}Industry insights, tips, and news from {{ company_name }}. Stay updated on screen printing trends and techniques.{% endblock %}
+
+{% block content %}
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PAGE HEADER                                                -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="relative pt-32 pb-20 bg-gs-cloud overflow-hidden border-b border-gs-accent-soft/20">
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Breadcrumb -->
+        <nav class="flex items-center space-x-2 text-sm mb-8 reveal">
+            <a href="{% url 'home' %}" class="text-gs-charcoal/60 hover:text-gs-accent transition-colors">Home</a>
+            <svg class="w-4 h-4 text-gs-charcoal/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <span class="text-gs-accent font-medium">Blog</span>
+        </nav>
+
+        <!-- Title -->
+        <div class="reveal delay-100">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-outfit font-black text-gs-charcoal mb-4">
+                Our <span class="text-gs-accent italic font-medium">Blog</span>
+            </h1>
+            <p class="text-gs-charcoal/70 text-lg max-w-2xl">
+                Expert insights, industry trends, and behind-the-scenes looks at precision screen printing.
+            </p>
+            <div class="w-24 h-1 bg-gs-accent-soft rounded-full mt-6"></div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- BLOG GRID                                                  -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="relative py-16 lg:py-24 bg-gs-snow">
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for post in posts %}
+            <article class="group reveal">
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-500 border border-gs-cloud hover:border-gs-accent-soft/50 group-hover:-translate-y-2 h-full flex flex-col">
+                    <!-- Image -->
+                    <div class="relative h-56 overflow-hidden bg-gs-cloud">
+                        {% if post.featured_image %}
+                        <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
+                        {% else %}
+                        <div class="w-full h-full flex items-center justify-center">
+                            <div class="text-center">
+                                <svg class="w-16 h-16 text-gs-charcoal/10 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+                            </div>
+                        </div>
+                        {% endif %}
+                        <!-- Date badge -->
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1.5 border border-gs-cloud shadow-sm">
+                            <span class="text-gs-charcoal text-xs font-semibold">{{ post.created_at|date:"M d, Y" }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="p-6 flex-1 flex flex-col border-t border-gs-cloud">
+                        <h2 class="text-xl font-outfit font-bold text-gs-charcoal mb-3 group-hover:text-gs-accent transition-colors line-clamp-2">
+                            {{ post.title }}
+                        </h2>
+                        <p class="text-gs-charcoal/70 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">
+                            {{ post.content|truncatewords:25|striptags }}
+                        </p>
+                        <a href="{% url 'blog_detail' slug=post.slug %}" class="inline-flex items-center text-gs-accent font-semibold text-sm group/link mt-auto hover:text-gs-charcoal transition-colors">
+                            <span>Read Full Article</span>
+                            <svg class="w-4 h-4 ml-1 group-hover/link:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </article>
+            {% empty %}
+            <div class="col-span-full text-center py-20 bg-white rounded-3xl border border-gs-cloud shadow-sm">
+                <div class="w-24 h-24 bg-gs-snow border border-gs-accent-soft/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-12 h-12 text-gs-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+                </div>
+                <h3 class="text-2xl font-outfit font-bold text-gs-charcoal mb-3">No Posts Yet</h3>
+                <p class="text-gs-charcoal/70 max-w-md mx-auto">We're working on some great content. Check back soon for industry insights and printing tips!</p>
+                <a href="{% url 'home' %}" class="inline-flex items-center mt-6 text-gs-accent font-semibold hover:underline">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                    Back to Home
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination (if applicable) -->
+        {% if is_paginated %}
+        <nav class="flex justify-center mt-16">
+            <div class="inline-flex items-center space-x-2">
+                {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}" class="w-10 h-10 flex items-center justify-center rounded-xl bg-white border border-gs-cloud text-gs-charcoal hover:border-gs-accent hover:text-gs-accent transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                </a>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                <a href="?page={{ num }}" class="w-10 h-10 flex items-center justify-center rounded-xl text-sm font-semibold transition-all {% if page_obj.number == num %}bg-gs-accent text-white border-gs-accent shadow-sm{% else %}bg-white border border-gs-cloud text-gs-charcoal hover:border-gs-accent hover:text-gs-accent{% endif %}">
+                    {{ num }}
+                </a>
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="w-10 h-10 flex items-center justify-center rounded-xl bg-white border border-gs-cloud text-gs-charcoal hover:border-gs-accent hover:text-gs-accent transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </a>
+                {% endif %}
+            </div>
+        </nav>
+        {% endif %}
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="relative py-16 bg-gs-ink overflow-hidden border-t border-gs-charcoal">
+    <div class="relative max-w-3xl mx-auto px-4 text-center reveal">
+        <h2 class="text-3xl font-outfit font-black text-white mb-4">Have a Project in Mind?</h2>
+        <p class="text-white/70 mb-8">Let's discuss your printing needs and bring your ideas to life.</p>
+        <a href="{% url 'quote_form' %}" class="inline-flex items-center px-8 py-4 bg-gs-accent text-white font-bold rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+            <span>Get a Free Quote</span>
+            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+    </div>
+</section>
+
+{% endblock %}

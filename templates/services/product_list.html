@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Our Products Showcase — {{ company_name }}{% endblock %}
+
+{% block content %}
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PRODUCT SHOWCASE HERO                                      -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="relative bg-gs-cloud pt-32 pb-20 overflow-hidden border-b border-gs-accent-soft/20">
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <!-- Badge -->
+        <div class="inline-flex items-center space-x-2 bg-white border border-gs-accent-soft/30 rounded-full px-4 py-2 mb-6 shadow-sm" data-aos="fade-down">
+            <span class="w-2 h-2 bg-gs-accent rounded-full"></span>
+            <span class="text-gs-charcoal/70 text-xs font-semibold uppercase tracking-widest">Precision Mockups</span>
+        </div>
+        <!-- Title -->
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-outfit font-black text-gs-charcoal mb-6 leading-tight">
+            Our Printed <span class="text-gs-accent italic font-medium">Products</span> Showcase
+        </h1>
+        <!-- Divider -->
+        <div class="w-20 h-1 bg-gs-accent-soft mx-auto rounded-full mb-6"></div>
+        <!-- Description -->
+        <p class="text-gs-charcoal/70 text-lg max-w-2xl mx-auto leading-relaxed">
+            Explore premium industrial-grade products, beautifully custom screen-printed on various materials. Hover on items to see precision printing details.
+        </p>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- FILTER & CATALOG CONTAINER                                 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="py-16 lg:py-24 bg-gs-snow">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Filter Bar -->
+        <div class="flex flex-wrap items-center justify-center gap-3 mb-16">
+            <a href="{% url 'product_list' %}" class="px-6 py-3 rounded-full text-sm font-bold border transition-all duration-300 {% if not selected_category %}bg-gs-charcoal text-gs-snow border-gs-charcoal shadow-md{% else %}bg-white text-gs-charcoal/60 border-gs-cloud hover:text-gs-charcoal hover:border-gs-accent-soft/50 hover:-translate-y-0.5{% endif %}">
+                All Products
+            </a>
+            {% for cat in categories %}
+            <a href="{% url 'product_list_by_category' category_slug=cat.slug %}" class="px-6 py-3 rounded-full text-sm font-bold border transition-all duration-300 {% if selected_category.slug == cat.slug %}bg-gs-accent text-white border-gs-accent shadow-md{% else %}bg-white text-gs-charcoal/60 border-gs-cloud hover:text-gs-accent hover:border-gs-accent/30 hover:-translate-y-0.5{% endif %}">
+                {{ cat.name }}
+            </a>
+            {% endfor %}
+        </div>
+
+        <!-- Products Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for product in products %}
+            <div class="product-card group relative bg-white rounded-3xl overflow-hidden border border-gs-cloud shadow-sm hover:shadow-lg transition-all duration-500 hover:-translate-y-2 flex flex-col h-full">
+                
+                <!-- Product Image Area -->
+                <div class="relative aspect-[4/3] overflow-hidden bg-gs-cloud">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    {% else %}
+                    <div class="w-full h-full flex items-center justify-center">
+                        <svg class="w-20 h-20 text-gs-charcoal/10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Category Badge -->
+                    <span class="absolute top-4 left-4 inline-block bg-white/90 backdrop-blur-md border border-gs-cloud shadow-sm rounded-full px-4 py-1 text-[11px] font-bold text-gs-charcoal tracking-wider uppercase">
+                        {{ product.category.name }}
+                    </span>
+                </div>
+
+                <!-- Product Details -->
+                <div class="p-8 flex flex-col flex-grow border-t border-gs-cloud">
+                    <!-- Heading -->
+                    <h3 class="text-2xl font-outfit font-black text-gs-charcoal mb-3 group-hover:text-gs-accent transition-colors duration-300">
+                        {{ product.name }}
+                    </h3>
+                    
+                    <!-- Description -->
+                    <p class="text-gs-charcoal/70 text-sm leading-relaxed mb-6 flex-grow">
+                        {{ product.description }}
+                    </p>
+
+                    <!-- Divider -->
+                    <div class="w-full h-px bg-gs-cloud mb-6"></div>
+
+                    <!-- Footer / CTAs -->
+                    <div class="flex items-center justify-between mt-auto">
+                        <span class="inline-flex items-center px-3 py-1 bg-gs-snow border border-gs-cloud rounded-full text-xs font-semibold text-gs-charcoal">
+                            <svg class="w-3.5 h-3.5 mr-1 text-gs-accent-soft" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                            {{ product.category.resolution_dpi|default:"1200 DPI" }}
+                        </span>
+                        
+                        <a href="{% url 'quote_form' %}?material={% if product.category.slug == 'garment-apparel-printing' %}fabric{% elif product.category.slug == 'fabric-textile-printing' %}silk{% elif product.category.slug == 'packaging-label-printing' %}cardboard{% else %}plastics{% endif %}" class="inline-flex items-center justify-center px-5 py-2.5 bg-gs-snow border border-gs-accent/30 hover:bg-gs-accent text-gs-accent hover:text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5">
+                            Order Quote
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <!-- No Products State -->
+            <div class="col-span-full text-center py-20 bg-white rounded-3xl border border-gs-cloud shadow-sm">
+                <svg class="w-16 h-16 text-gs-charcoal/20 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                <h3 class="text-xl font-outfit font-bold text-gs-charcoal mb-2">No Products Found</h3>
+                <p class="text-gs-charcoal/60 max-w-md mx-auto text-sm">We currently do not have any mockups for this specific category. Please browse other categories or check back soon!</p>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- DYNAMIC CALL TO ACTION                                     -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="relative py-24 bg-gs-charcoal overflow-hidden border-t border-gs-charcoal">
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-outfit font-black text-white mb-6">
+            Need a Custom Design
+            <span class="block mt-2 text-gs-accent-soft italic font-medium">Printed on Your Product?</span>
+        </h2>
+        <p class="text-white/70 text-lg max-w-2xl mx-auto mb-10">
+            Send us your graphics or requirements! Our precision printing setups will deliver beautiful finishes matching your brand standards.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{% url 'quote_form' %}" class="group inline-flex items-center justify-center px-10 py-5 bg-gs-accent text-white font-bold text-lg rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <span>Start Project Quote</span>
+                <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+            <a href="{% url 'service_list' %}" class="inline-flex items-center justify-center px-10 py-5 border-2 border-white/20 text-white hover:bg-white/10 hover:border-white/40 font-semibold text-lg rounded-xl transition-all duration-300">
+                Explore Printing Specs
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
